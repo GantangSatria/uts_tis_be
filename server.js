@@ -1,13 +1,15 @@
-import express from 'express'
+const express = require('express');
+const soap = require('soap');
+
+const routes = require('./app/routes/app.routes.js');
+
 const expressServer = express()
-const soap = require('soap')
-const port = 3000
+const PORT = process.env.PORT || 3000;
 
-expressServer.get('/', (req, res) => {
- res.send('Hello World!')
-})
+expressServer.use('/', routes);
 
-expressServer.listen(port, () => {
-    var soapServer = soap.listen(expressServer, '/hello', service, wsdl);
-    console.log(`Server running at http://localhost:${port}`)
-})
+expressServer.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    // soap.listen(expressServer, '/hello', service, wsdl);
+  });
+
