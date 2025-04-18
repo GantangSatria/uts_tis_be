@@ -1,11 +1,11 @@
 {
   "name": "uts_tis_be",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
