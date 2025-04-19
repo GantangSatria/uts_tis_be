@@ -1,0 +1,33 @@
+<!-- <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ticket">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="train" type="xs:string"/>
+        <xs:element name="date" type="xs:date"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema> -->
+
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://example.com/ticket"
+  xmlns="http://example.com/ticket"
+  elementFormDefault="qualified">
+    <xs:element name="tickets">
+    <xs:complexType>
+        <xs:sequence>
+        <xs:element name="ticket" type="TicketType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="TicketType">
+    <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="train" type="xs:string"/>
+        <xs:element name="date" type="xs:date"/>
+    </xs:sequence>
+    </xs:complexType>
+</xs:schema>
