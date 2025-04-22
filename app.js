@@ -25,15 +25,11 @@ const service = {
   }
 };
 
-// const wsdlXML = fs.readFileSync('./app/wsdl/service.wsdl', 'utf8');
 const wsdl = fs.readFileSync(path.join(__dirname, 'app', 'wsdl', 'service.wsdl'), 'utf8');
-// const wsdl = fs.readFileSync(path.join(__dirname, 'wsdl', 'service.wsdl'), 'utf8')
 
 
 expressServer.use('/', routes);
-
-// soap.listen(expressServer, '/wsdl', service, wsdlXML);
-// console.log("SOAP endpoint at http://localhost:3000/wsdl");
+expressServer.use('/wsdl', express.static(path.join(__dirname, 'app/wsdl')));
 
 try {
   soap.listen(expressServer, '/wsdl', service, wsdl);

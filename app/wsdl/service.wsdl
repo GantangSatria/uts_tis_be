@@ -8,7 +8,7 @@
              xmlns:ker="http://example.com/ticket"
              xmlns="http://schemas.xmlsoap.org/wsdl/">
 
-<types>
+<!-- <types>
     <xsd:schema targetNamespace="http://example.com/ticket">
       <xsd:element name="AddTicketRequest">
         <xsd:complexType>
@@ -34,15 +34,15 @@
         </xsd:complexType>
       </xsd:element>
     </xsd:schema>
-  </types>
-
-  <!-- <types>
-    <xsd:schema targetNamespace="http://example.com/ticket"
-                xmlns="http://example.com/ticket"
-                elementFormDefault="qualified">
-      <xsd:import namespace="http://example.com/ticket" schemaLocation="ticket.xsd"/>
-    </xsd:schema>
   </types> -->
+
+ <types>
+    <xsd:schema targetNamespace="http://example.com/ticket"
+                elementFormDefault="qualified"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://example.com/ticket" schemaLocation="http://localhost:3000/wsdl/ticket.xsd"/>
+    </xsd:schema>
+  </types>
 
   <message name="GetTicketsRequest"/>
   <message name="GetTicketsResponse">
