@@ -25,13 +25,19 @@ const service = {
   }
 };
 
-const wsdlXML = fs.readFileSync('./app/wsdl/service.wsdl', 'utf8');
-// const wsdl = fs.readFileSync(path.join(__dirname, 'app', 'wsdl', 'service.wsdl'), 'utf8');
+const wsdl = fs.readFileSync(path.join(__dirname, 'app', 'wsdl', 'service.wsdl'), 'utf8');
+
 
 expressServer.use('/', routes);
+expressServer.use('/wsdl', express.static(path.join(__dirname, 'app/wsdl')));
 
-soap.listen(expressServer, '/wsdl', service, wsdlXML);
-console.log("SOAP endpoint at http://localhost:3000/wsdl");
+try {
+  soap.listen(expressServer, '/wsdl', service, wsdl);
+  console.log('SOAP service ready!');
+} catch (err) {
+  console.error('SOAP init error:', err);
+}
+
 
 expressServer.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

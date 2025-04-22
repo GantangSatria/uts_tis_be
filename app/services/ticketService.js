@@ -2,15 +2,37 @@ const Ticket = require('../models/tickets');
 
 const getTickets = async (args, callback) => {
   try {
-    const tickets = await Ticket.find();
+    const ticketsFromDb = await Ticket.find();
+
+    const tickets = {
+      ticket: ticketsFromDb.map(t => ({
+        name: t.name,
+        train: t.train,
+        date: t.date.toISOString().split('T')[0] // format jadi YYYY-MM-DD
+      }))
+    };
+    
+    console.log('Fetched tickets:', tickets);
     callback(null, { tickets });
   } catch (error) {
+    console.error('Error fetching tickets:', error); 
     callback(error);
   }
 };
 
 const addTicket = async (args, callback) => {
-  const { name, train, date } = args.ticket; 
+  console.log('Received args:', args);
+
+  const { name, train, date } = args.ticket || {}; 
+
+  if (!name || !train || !date) {
+    return callback({
+      Fault: {
+        faultcode: 'Client',
+        faultstring: 'Missing name, train, or date field'
+      }
+    });
+  }
 
   try {
     const newTicket = new Ticket({

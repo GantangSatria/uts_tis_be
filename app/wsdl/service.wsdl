@@ -1,73 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="TicketService"
-                  targetNamespace="http://example.com/ticket"
-                  xmlns:tns="http://example.com/ticket"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  xmlns:ker="http://kereta.com/">
+<definitions name="TicketService"
+             targetNamespace="http://example.com/ticket"
+             xmlns:tns="http://example.com/ticket"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:ker="http://example.com/ticket"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
 
-  <wsdl:types>
-    <xsd:schema targetNamespace="http://kereta.com/">
-      <xsd:import namespace="http://kereta.com/" schemaLocation="ticket.xsd"/>
+<!-- <types>
+    <xsd:schema targetNamespace="http://example.com/ticket">
+      <xsd:element name="AddTicketRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ticket">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="name" type="xsd:string"/>
+                  <xsd:element name="train" type="xsd:string"/>
+                  <xsd:element name="date" type="xsd:date"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="AddTicketResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
     </xsd:schema>
-  </wsdl:types>
+  </types> -->
 
-  <!-- Request and Response Messages -->
-  <wsdl:message name="GetTicketsRequest"/>
-  <wsdl:message name="GetTicketsResponse">
-    <wsdl:part name="tickets" type="xsd:string"/>
-  </wsdl:message>
+ <types>
+    <xsd:schema targetNamespace="http://example.com/ticket"
+                elementFormDefault="qualified"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://example.com/ticket" schemaLocation="http://localhost:3000/wsdl/ticket.xsd"/>
+    </xsd:schema>
+  </types>
 
-  <wsdl:message name="AddTicketRequest">
-    <wsdl:part name="name" type="xsd:string"/>
-    <wsdl:part name="train" type="xsd:string"/>
-    <wsdl:part name="date" type="xsd:string"/>
-  </wsdl:message>
-  <wsdl:message name="AddTicketResponse">
-    <wsdl:part name="result" type="xsd:string"/>
-  </wsdl:message>
+  <message name="GetTicketsRequest"/>
+  <message name="GetTicketsResponse">
+    <part name="tickets" element="tns:tickets"/>
+  </message>
 
-  <!-- PortType -->
-  <wsdl:portType name="TicketPortType">
-    <wsdl:operation name="GetTickets">
-      <wsdl:input message="tns:GetTicketsRequest"/>
-      <wsdl:output message="tns:GetTicketsResponse"/>
-    </wsdl:operation>
-    <wsdl:operation name="AddTicket">
-      <wsdl:input message="tns:AddTicketRequest"/>
-      <wsdl:output message="tns:AddTicketResponse"/>
-    </wsdl:operation>
-  </wsdl:portType>
+  <message name="AddTicketRequest">
+    <part name="ticket" element="tns:ticket"/>
+  </message>
+  <message name="AddTicketResponse">
+    <part name="result" type="xsd:string"/>
+  </message>
 
-  <!-- Binding -->
-  <wsdl:binding name="TicketBinding" type="tns:TicketPortType">
-    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="GetTickets">
-      <soap:operation soapAction="getTickets"/>
-      <wsdl:input>
-        <soap:body use="encoded" namespace="urn:ticket" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="encoded" namespace="urn:ticket" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddTicket">
-      <soap:operation soapAction="addTicket"/>
-      <wsdl:input>
-        <soap:body use="encoded" namespace="urn:ticket" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="encoded" namespace="urn:ticket" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
+  <portType name="TicketPortType">
+    <operation name="GetTickets">
+      <input message="tns:GetTicketsRequest"/>
+      <output message="tns:GetTicketsResponse"/>
+    </operation>
+    <operation name="AddTicket">
+      <input message="tns:AddTicketRequest"/>
+      <output message="tns:AddTicketResponse"/>
+    </operation>
+  </portType>
 
-  <!-- Service -->
-  <wsdl:service name="TicketService">
-    <wsdl:port name="TicketPort" binding="tns:TicketBinding">
+  <binding name="TicketBinding" type="tns:TicketPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetTickets">
+      <soap:operation soapAction="http://example.com/ticket/GetTicket"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="AddTicket">
+      <soap:operation soapAction="http://example.com/ticket/AddTicket"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="TicketService">
+    <port name="TicketPortType" binding="tns:TicketBinding">
       <soap:address location="http://localhost:3000/wsdl"/>
-    </wsdl:port>
-  </wsdl:service>
+    </port>
+  </service>
 
-</wsdl:definitions>
+</definitions>
