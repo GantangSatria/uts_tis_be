@@ -56,6 +56,21 @@
     <part name="result" type="xsd:string"/>
   </message>
 
+  <message name="UpdateTicketRequest">
+    <part name="ticket" element="tns:ticket"/>
+  </message>
+  <message name="UpdateTicketResponse">
+    <part name="result" type="xsd:string"/>
+  </message>
+
+  <message name="DeleteTicketRequest">
+    <part name="id" type="xsd:string"/>
+  </message>
+  <message name="DeleteTicketResponse">
+    <part name="result" type="xsd:string"/>
+  </message>
+
+
   <portType name="TicketPortType">
     <operation name="GetTickets">
       <input message="tns:GetTicketsRequest"/>
@@ -64,6 +79,15 @@
     <operation name="AddTicket">
       <input message="tns:AddTicketRequest"/>
       <output message="tns:AddTicketResponse"/>
+    </operation>
+    <operation name="UpdateTicket">
+      <input message="tns:UpdateTicketRequest"/>
+      <output message="tns:UpdateTicketResponse"/>
+    </operation>
+
+    <operation name="DeleteTicket">
+      <input message="tns:DeleteTicketRequest"/>
+      <output message="tns:DeleteTicketResponse"/>
     </operation>
   </portType>
 
@@ -80,6 +104,25 @@
     </operation>
     <operation name="AddTicket">
       <soap:operation soapAction="http://example.com/ticket/AddTicket"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="UpdateTicket">
+      <soap:operation soapAction="http://example.com/ticket/UpdateTicket"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+
+    <operation name="DeleteTicket">
+      <soap:operation soapAction="http://example.com/ticket/DeleteTicket"/>
       <input>
         <soap:body use="literal"/>
       </input>

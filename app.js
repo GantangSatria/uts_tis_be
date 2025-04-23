@@ -21,6 +21,8 @@ const service = {
     TicketPortType: {
       GetTickets: TicketService.getTickets,
       AddTicket: TicketService.addTicket,
+      UpdateTicket: TicketService.updateTicket,
+      DeleteTicket: TicketService.deleteTicket
     }
   }
 };
